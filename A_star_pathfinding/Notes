@@ -1,0 +1,133 @@
+-	A* is a variant of Dijkstras algorithm commonly used in games. 
+A* assigns a weight to each open node equal to the weight of the edge to that node plus the approximate distance between that node and the finish. 
+
+
+-	 This approximate distance is found by the heuristic, and represents a minimum possible distance between that node and the end. 
+This allows it to eliminate longer paths once an initial path is found. If there is a path of length x between the start and finish, 
+and the minimum distance between a node and the finish is greater than x, that node need not be examined.[4]
+
+
+-	As the value of the heuristic increases, A* examines fewer nodes but no longer guarantees an optimal path. 
+In many applications (such as video games) this is acceptable and even desirable, in order to keep the algorithm running quickly.
+
+
+
+
+
+
+
+
+Dijkstra’s algorithm
+For a given source node in the graph, the algorithm finds the shortest path between that node and every other.
+It can also be used for finding the shortest paths from a single node to a single destination 
+node by stopping the algorithm once the shortest path to the destination node has been determined. 
+
+https://www.youtube.com/watch?v=pVfj6mxhdMw&ab_channel=ComputerScience
+if you look at this video,
+the algorithm keeps track of three arrays
+1.	lowestCostFromA
+2.	where you came from 
+3.	visited
+
+
+
+
+
+With Breadth First Search and Dijkstra’s Algorithm, the frontier expands in all directions. 
+This is a reasonable choice if you’re trying to find a path to all locations or to many locations. 
+However, a common case is to find a path to only one location. 
+
+
+
+
+
+
+
+Amit’s A* Pages
+http://theory.stanford.edu/~amitp/GameProgramming/
+
+
+
+A* Pathfinding for Beginners
+https://www.gamedev.net/tutorials/programming/artificial-intelligence/a-pathfinding-for-beginners-r2003/
+
+
+Introduction to the A* Algorithm
+https://www.redblobgames.com/pathfinding/a-star/introduction.html
+
+
+nodes are placed by hand
+
+Output: The path found by A* is made of graph nodes and edges
+A* will tell you to move from one location to another but it won’t tell you how. 
+Remember that it doesn’t know anything about rooms or doors; all it sees is the graph. 
+You’ll have to decide whether a graph edge returned by A* means moving from tile to tile or walking in a straight line or opening a door or swimming or running along a curved path.
+
+
+
+The pathfinding graph doesn’t have to be the same as what your game map uses. 
+A grid game map can use a non-grid pathfinding graph, or vice versa. 
+A* runs fastest with the fewest graph nodes; grids are often easier to work with but result in lots of nodes. 
+This page covers the A* algorithm but not graph design; see my other page for more about graphs. 
+For the explanations on the rest of the page, I’m going to use grids because it’s easier to visualize the concepts.
+
+
+Dijkstra’s Algorithm (also called Uniform Cost Search) lets us prioritize which paths to explore. 
+Instead of exploring all possible paths equally, it favors lower cost paths. We can assign lower costs to encourage moving on roads, 
+higher costs to avoid forests, higher costs to discourage going near enemies, and more. 
+When movement costs vary, we use this instead of Breadth First Search.
+
+
+A* is a modification of Dijkstra’s Algorithm that is optimized for a single destination. 
+Dijkstra’s Algorithm can find paths to all locations; A* finds paths to one location, or the closest of several locations. 
+It prioritizes paths that seem to be leading closer to a goal.
+
+
+
+
+
+
+
+A*
+
+Ive looked into using A* for the pathfinding but all the places Ive looked at say that A* is for going from point A to point B where the position of point 
+B doesnt change. As my player is constantly moving around the map is there a more suitable pathfinding algorithm that I can use?
+
+
+
+You dont have to do the A* every frame. Cache it.
+
+If the player is still on the last path, keep on it instead of doing another A*.
+
+Predict where the player will be a second or 2 later and path there instead of their exact position.
+
+If a player exploits AI, a player could weave back and forth causing the AI to go back-and-forth 
+(depending on the game) because in 1/2 the frames one path is faster and the other 1/2 a different path is faster. 
+So caching and pathing less often can be more beneficial than trying to find the best path for each and every frame. 
+As a bonus, its improves performance (especially if multi-threaded) if you have complex levels and several enemies.
+
+
+
+-	A* simply tells you the most optimal path at specific a moment in time. Its completely up 
+to you how to manage that information. That is, theres no rule saying you just have to blindly follow that static path to the end before searching again.
+
+
+
+
+
+Solving path finding and AI movement in a 2D platformer
+http://joostdevblog.blogspot.com/2014/06/solving-path-finding-and-movement-in-2d.html?m=1
+
+
+I used A* for pathfinding when working on Digimon Rumble Arena 2 (similar to Super Smash Bros). 
+Obviously, the characters were moving around constantly, and it was a highly dynamic environment, 
+with lots of destructible terrain, shifting platforms, traps and pitfalls, etc. 
+To make the pathfinding dynamic, all you have to is to re-search the path space at regular intervals. 
+In my case, if I recall correctly, I did that whenever an agent reached a new node.
+
+So, yes, A* is fine for dynamic targets and environments, so long as its applied correctly.
+
+
+
+-	Clearance based pathfinding
+https://harablog.wordpress.com/2009/01/29/clearance-based-pathfinding/
